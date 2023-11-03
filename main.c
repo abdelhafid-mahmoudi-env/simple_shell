@@ -1,30 +1,14 @@
-#include "shell.h"
 
-/**
- * main - Entry point for the simple shell.
- * @argc: Argument count.
- * @argv: Argument vector.
- * Return: 0 on success, 1 on failure.
- */
-int main(int argc, char **argv)
-{
-    	char *line;
-    	char **args;
-	int should_continue = 1;  /*Flag to control the loop*/
+#include "main.h"
 
-    	(void) argc;
-    	(void) argv;
+int main(int argc __attribute__((unused)), char **argv __attribute__((unused))) {
+    /* Load config files, if any. */
 
-    while (should_continue)
-    {
-        printf("#cisfun$ ");
-        line = read_line();
-        args = split_line(line);
-        if (args[0] != NULL)
-            should_continue = execute_command(args);
-        free(line);
-        free(args);
-    }
+    /* Run command loop. */
+    loop();
 
-    return (0);
+    /* Perform any shutdown/cleanup. */
+
+    return EXIT_SUCCESS;
 }
+
