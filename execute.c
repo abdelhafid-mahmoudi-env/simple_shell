@@ -1,103 +1,147 @@
 #include "main.h"
 
 /**
- * shell_num_builtins - Returns the number of built-in shell commands.
- *
- * Return: The number of built-in commands.
+ * has_slash_in_command - checks for slashes in the command
+ * @str: input string
+ * Return: 1 if slash is found, 0 otherwise
  */
-int shell_num_builtins(void)
+int has_slash_in_command(char *str)
 {
-	return (4);
+    while (*str)
+    {
+        if (*str == '/')
+            return (1);
+        str++;
+    }
+    return (0);
 }
 
 /**
- * launch - Launches a new process to execute a command.
- * @args: An array of strings representing the command and its arguments.
- *
- * Return: Always returns 1.
+ * execute_user_command - executes the command given by the user
+ * @shell_ptrs: structure containing all malloced spaces
+ * @filename: name of the file being run
+ * @envp: environment variable
+ * Return: errno value
  */
-int launch(char **args)
+int execute_user_command(shell_t *shell_ptrs, char *filename, char **envp)
 {
-	pid_t pid;
-	int status;
+    pid_t child_pid;
+    int status;
+    char *input_org;
+    char **input_token = shell_ptrs->input_token;
+    char **path = shell_ptrs->path_values;
 
-	pid = fork();
-
-	if (pid == 0)
-	{
-		if (execv(args[0], args) == -1)
-		{
-			perror(args[0]);
-		}
-		exit(EXIT_FAILURE);
-	}
-	else if (pid < 0)
-	{
-		perror("Forking error");
-	}
-	else
-	{
-		do {
-			waitpid(pid, &status, WUNTRACED);
-		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
-	}
-	return (1);
+    if (input_token[0])
+    {
+        child_pid = fork();
+        if (child_pid == 0)
+        {
+            input_org = _strdup(input_token[0]);
+            input_token[0] = search_command_in_path(path, input_token[0]);
+            if (input_token[0])
+            {
+                if (execve(input_token[0], input_token, envp) == -1)
+                    perror(filename);
+                free(input_token[0]);
+            }
+            else
+            {
+                errno = 127;
+                print_command_error(input_org, filename);
+            }
+            free(input_org);
+            _exit(errno);
+        }
+        else
+        {
+            wait(&status);
+            errno = WEXITSTATUS(status);
+        }
+    }
+    return (errno);
 }
 
 /**
- * execute - Executes a command, either a built-in or an external one.
- * @args: An array of strings representing the command and its arguments.
- * @builtin_str: An array of strings representing built-in commands.
- *
- * Return: Always returns 1.
+ * process_builtin_command - checks if the user calls a built-in command
+ * @ptrs: contains all the malloced spaces
+ * @filename: name of the file
+ * Return: 1 for match not found, 0 for match found
  */
-int execute(char **args, char **builtin_str)
+int process_builtin_command(shell_t *ptrs, char *filename)
 {
-	int i;
+    size_t index;
+    char **input_words = ptrs->input_token;
+    built_t cmd[] = {
+        {"exit", my_exit},
+        {"env", print_env},
+        {NULL, NULL},
+    };
 
-	if (args[0] == NULL || args[0][0] == '\0')
-	{
-		return (1);
-	}
+    if (!input_words || !input_words[0])
+        return (1);
 
-	if (args[1] != NULL)
-	{
-		fprintf(stderr, "%s: command not found\n", args[0]);
-		return (1);
-	}
-
-	for (i = 0; i < 4; i++)
-	{
-		if (strcmp(args[0], "cd") == 0)
-		{
-			return (cmd_cd(args));
-		}
-		else if (strcmp(args[0], "help") == 0)
-		{
-			return (cmd_help(args, builtin_str));
-		}
-		else if (strcmp(args[0], "exit") == 0)
-		{
-			return (cmd_exit(args));
-		}
-		else if (strcmp(args[0], "env") == 0)
-		{
-			return (cmd_env(args));
-		}
-	}
-
-	return (launch(args));
+    for (index = 0; cmd[index].cmd_name; index++)
+    {
+        if (strcmp(input_words[0], cmd[index].cmd_name) == 0)
+        {
+            cmd[index].cmd(ptrs);
+            return (0);
+        }
+    }
+    return (1);
 }
 
 /**
- * command_exists - Checks if a command exists in the system.
- * @cmd: The command to check.
- *
- * Return: 1 if the command exists, 0 otherwise.
+ * execute_path_command - runs the command specified by the pathname
+ * @shell_ptrs: structure containing all malloced memory
+ * @filename: filename of the file
+ * Return: errno value
  */
-int command_exists(char *cmd)
+int execute_path_command(shell_t *shell_ptrs, char *filename)
 {
-	struct stat buffer;
+    pid_t child_pid;
+    int status;
+    char **input_token = shell_ptrs->input_token;
 
-	return (stat(cmd, &buffer) == 0 && (buffer.st_mode & S_IXUSR));
+    child_pid = fork();
+    if (child_pid == 0)
+    {
+        if (execve(input_token[0], input_token, environ) == -1)
+            perror(filename);
+        _exit(errno);
+    }
+    else
+    {
+        wait(&status);
+        errno = WEXITSTATUS(status);
+    }
+    return (errno);
+}
+
+/**
+ * execute_exit - simple implementation of exit
+ * @ptrs: structure containing all malloced memory
+ */
+void execute_exit(shell_t *ptrs)
+{
+    unsigned int i;
+    char *exit_str;
+    int exit_code = 0;
+
+    if (ptrs == NULL)
+        exit(EXIT_FAILURE);
+
+    exit_str = ptrs->input_token[1];
+    if (exit_str != NULL)
+    {
+        for (i = 0; exit_str[i] != '\0'; i++)
+        {
+            if (!isdigit(exit_str[i]))
+                exit(EXIT_FAILURE);
+            exit_code = exit_code * 10 + (exit_str[i] - '0');
+        }
+    }
+    free_shell_resources(ptrs);
+    exit_code = exit_code > 255 ? exit_code % 256 : exit_code;
+    exit(exit_code);
 }
