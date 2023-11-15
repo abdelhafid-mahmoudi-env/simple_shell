@@ -31,6 +31,6 @@ void loop(void);
 
 /* Function prototypes for signal handling: */
 void sigint_handler(int sig);
-int shell_num_builtins();
+int shell_num_builtins(void);
 
 #endif /* MAIN_H */
