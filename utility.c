@@ -1,4 +1,11 @@
 #include "main.h"
+#include "main.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
 
 /**
  * sigint_handler - Signal handler for SIGINT
@@ -19,7 +26,7 @@ void loop(void)
 	char **args;
 	int status;
 
-	signal(SIGINT, sigint_handler);
+	signal(2, sigint_handler);
 
 	do {
 		write(STDOUT_FILENO, "$ ", 2);
@@ -31,4 +38,3 @@ void loop(void)
 		free(args);
 	} while (status);
 }
-
