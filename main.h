@@ -1,8 +1,7 @@
-#ifndef SHELL_H
-#define SHELL_H
+#ifndef MAIN_H
+#define MAIN_H
 
-#define DELIMITER " \t\r\n\a"
-
+/* header files */
 #include <sys/types.h>
 #include <unistd.h>
 #include <sys/wait.h>
@@ -52,10 +51,10 @@ int run_path(shell_t *, char *);
 int check_slash(char *);
 
 /* string.c */
-size_t _strlen(char *);
-char *_strdup(char *);
-char **tokenize_str(char *, char *);
-int _strcmp(char *, char *);
+size_t _str_length(char *);
+char *_str_duplicate(char *);
+char **_split_string(char *, char *);
+int _str_compare(char *, char *);
 
 /* prompt_util.c */
 void print_ps1(int);
@@ -79,3 +78,4 @@ ssize_t getline(char **, size_t *, FILE *);
 extern char **environ;
 
 #endif
+

@@ -10,7 +10,7 @@
 int main(int argc, char *argv[], char *envp[])
 {
 	char **path_values, *modify_path, **input_token, *input;
-	char delimiter[] = DELIMITER;
+	char delimiter[] = " \n\r\t";
 	size_t n_input;
 	ssize_t getline_stat;
 	shell_t shell_ptrs;
@@ -25,7 +25,7 @@ int main(int argc, char *argv[], char *envp[])
 	while ((getline_stat = getline(&input, &n_input, stdin)) != -1)
 	{
 		shell_ptrs.input = input;
-		input_token = tokenize_str(input, delimiter);
+		input_token = _split_string(input, delimiter);
 		shell_ptrs.input_token = input_token;
 		if (input_token[0] && check_slash(input_token[0]) == 1)
 			run_path(&shell_ptrs, argv[0]);
@@ -79,7 +79,7 @@ int run_command(shell_t *shell_ptrs, char *filename, char **envp)
 		child_pid = fork();
 		if (child_pid == 0)
 		{
-			input_org = _strdup(input_token[0]);
+			input_org = _str_duplicate(input_token[0]);
 			input_token[0] = find_pathname(path, input_token[0]);
 			if (input_token[0] != NULL)
 			{
@@ -133,7 +133,7 @@ int run_build_in(shell_t *ptrs, char *filename)
 	index = 0;
 	while (cmd[index].cmd_name)
 	{
-		if (!_strcmp(ptrs->input_token[0], cmd[index].cmd_name))
+		if (!_str_compare(ptrs->input_token[0], cmd[index].cmd_name))
 		{
 			(cmd[index].cmd)(ptrs);
 			return (0);

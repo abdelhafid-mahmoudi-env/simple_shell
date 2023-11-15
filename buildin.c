@@ -36,7 +36,7 @@ void print_env(shell_t *ptrs)
 		return;
 	for (i = 0; environ[i] != NULL; i++)
 	{
-		k = _strlen(environ[i]);
+		k = _str_length(environ[i]);
 		if (k != 0)
 		{
 			write(STDOUT_FILENO, environ[i], k);

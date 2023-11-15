@@ -19,7 +19,7 @@ char *_strtok(char *str, const char *delim)
 		str = end + 1;
 	}
 	else
-		end_str = str + _strlen(str);
+		end_str = str + _str_length(str);
 	for (i = 0; str + i < end_str; i++)
 	{
 		for (j = 0; delim != NULL && delim[j] != '\0'; j++)

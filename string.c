@@ -2,11 +2,11 @@
 #include <string.h>
 
 /**
- * _strlen - counts length of a string
+ * _str_length - counts length of a string
  * @str: string
  * Return: number of string
  */
-size_t _strlen(char *str)
+size_t _str_length(char *str)
 {
 	char *s = str;
 	size_t num_char;
@@ -20,18 +20,18 @@ size_t _strlen(char *str)
 }
 
 /**
- * _strdup - create an identical duplicate in new allocated memory.
+ * _str_duplicate - create an identical duplicate in new allocated memory.
  * @s: pointer to string to duplicate.
  *
  * Return: pointer to new memory address of duplicate.
  */
-char *_strdup(char *s)
+char *_str_duplicate(char *s)
 {
 	size_t i, len;
 	char *dup;
 
 	i = len = 0;
-	len = _strlen(s);
+	len = _str_length(s);
 	dup = malloc(sizeof(char) * (len + 1));
 	if (!dup)
 		return (NULL);
@@ -46,12 +46,12 @@ char *_strdup(char *s)
 }
 
 /**
- * _strcmp - compares two strings
+ * _str_compare - compares two strings
  * @str1: first string
  * @str2: second string
  * Return: 0 if they are equal, 1 if not equal
  */
-int _strcmp(char *str1, char *str2)
+int _str_compare(char *str1, char *str2)
 {
 	while (*str1 != '\0' && *str2 != '\0')
 	{
@@ -64,14 +64,14 @@ int _strcmp(char *str1, char *str2)
 }
 
 /**
- * tokenize_str - function that take a string split them up at a delimiters and
+ * _split_string - function that take a string split them up at a delimiters and
  * add them into a array.
  * @str: string to process.
  * @delim: delimiter to split at.
  *
  * Return: pointer to pointers
  */
-char **tokenize_str(char *str, char *delim)
+char **_split_string(char *str, char *delim)
 {
 	size_t n_delim = 0;
 	char *str_dup, *tok;
@@ -79,7 +79,7 @@ char **tokenize_str(char *str, char *delim)
 
 	if (!str || !delim)
 		return (NULL);
-	str_dup = _strdup(str);
+	str_dup = _str_duplicate(str);
 
 	/* count the delimiters */
 	tok = _strtok(str_dup, delim);

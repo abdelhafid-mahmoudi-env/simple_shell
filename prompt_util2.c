@@ -24,7 +24,7 @@ void p_commanderr(char *command, char *filename)
 	size_t num_char, i;
 	(void)filename;
 
-	num_char = _strlen(error) + _strlen(command);
+	num_char = _str_length(error) + _str_length(command);
 	error_message = malloc(sizeof(char) * (++num_char));
 
 	i = 0;
