@@ -20,6 +20,12 @@ int launch(char **args)
 {
 	pid_t pid;
 	int status;
+	
+	if (!command_exists(args[0]))
+	{
+		fprintf(stderr, "%s: command not found\n", args[0]);
+		return (1);
+	}
 
 	pid = fork();
 
