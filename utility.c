@@ -7,7 +7,7 @@
 void sigint_handler(int sig __attribute__((unused)))
 {
 	write(STDOUT_FILENO, "\n", 1);
-	write(STDOUT_FILENO, "$ ", 2);
+	write(STDOUT_FILENO, "#cisfun$ ", 2);
 }
 
 /**
@@ -23,7 +23,7 @@ void loop(char **builtin_str)
 	signal(SIGINT, sigint_handler);
 
 	do {
-		printf("$ ");
+		printf("#cisfun$ ");
 		line = read_line();
 		args = split_line(line);
 		status = execute(args, builtin_str);
