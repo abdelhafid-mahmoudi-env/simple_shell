@@ -1,24 +1,23 @@
 #include "main.h"
-#include <sys/wait.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
 
 /**
  * read_line - Reads a line of input from stdin
- *
  * Return: The line from stdin
  */
+char *read_line(void) {
+    char *line = NULL;
+    size_t bufsize = 0;  /* Changed ssize_t to size_t */
 
-char *read_line(void)
-{
-	char *line = NULL;
+    if (getline(&line, &bufsize, stdin) == -1) {
+        if (feof(stdin)) {
+            /* We received an EOF */
+            exit(EXIT_SUCCESS);
+        } else  {
+            perror("readline");
+            exit(EXIT_FAILURE);
+        }
+    }
 
-	ssize_t bufsize = 0;
-	getline(&line, &bufsize, stdin);
-	return (line);
+    return line;
 }
-
 

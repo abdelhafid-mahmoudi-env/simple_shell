@@ -1,19 +1,11 @@
 #include "main.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
 
 /**
  * split_line - Splits a line into tokens
  * @line: The line to split
- *
  * Return: Null-terminated array of tokens
  */
-char **split_line(char *line)
-{
+char **split_line(char *line) {
     int bufsize = 64, position = 0;
     char **tokens = malloc(bufsize * sizeof(char*));
     char *token;
@@ -25,7 +17,9 @@ char **split_line(char *line)
 
     token = strtok(line, " \t\r\n\a");
     while (token != NULL) {
-        tokens[position++] = token;
+        tokens[position] = token;
+        position++;
+
         if (position >= bufsize) {
             bufsize += 64;
             tokens = realloc(tokens, bufsize * sizeof(char*));
@@ -40,3 +34,5 @@ char **split_line(char *line)
     tokens[position] = NULL;
     return tokens;
 }
+
+

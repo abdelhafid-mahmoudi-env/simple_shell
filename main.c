@@ -1,32 +1,15 @@
+
 #include "main.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/types.h>
-#include <sys/wait.h>
 
-/**
- * main - Entry point for the simple shell
- *
- * Return: Always 0 (Success)
- */
-int main(void)
-{
-    char *line;
-    char **args;
-    int status;
+int main(int argc __attribute__((unused)), char **argv __attribute__((unused))) {
+    /* Load config files, if any. */
 
-    do {
-        printf("#cisfun$ ");
-        line = read_line();
-        args = split_line(line);
-        status = execute(args);
+    /* Run command loop. */
+    loop();
 
-        free(line);
-        free(args);
-    } while (status);
+    /* Perform any shutdown/cleanup. */
 
-    return 0;
+    return EXIT_SUCCESS;
 }
+
 
