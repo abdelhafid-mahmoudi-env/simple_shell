@@ -20,7 +20,7 @@ int launch(char **args)
 {
 	pid_t pid;
 	int status;
-	
+
 	if (!command_exists(args[0]))
 	{
 		fprintf(stderr, "%s: command not found\n", args[0]);
@@ -61,7 +61,7 @@ int execute(char **args, char **builtin_str)
 {
 	int i;
 
-	if (args[0] == NULL)
+	if (args[0] == NULL || args[0][0] == '\0')
 	{
 		return (1);
 	}
