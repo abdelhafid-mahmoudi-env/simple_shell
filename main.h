@@ -13,7 +13,7 @@
 extern char **environ;
 
 extern char *builtin_str[];
-extern int (*builtin_func[]) (char **);
+int (*builtin_func(int index))(char **);
 
 /* Function prototypes for built-in shell commands: */
 int cmd_exit(char **args);
