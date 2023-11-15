@@ -1,12 +1,12 @@
 #include "main.h"
 
 /**
-  * _strtok - tokenizes a string
-  * @str: string to tokenize
-  * @delim: string that contains the delimiters
-  * Return: pointer to position in string of a null terminated word.
-  */
-char *_strtok(char *str, const char *delim)
+ * tokenize_string - tokenizes a string
+ * @str: string to tokenize
+ * @delim: string that contains the delimiters
+ * Return: pointer to the next token in the string, or NULL if no more tokens are found.
+ */
+char *tokenize_string(char *str, const char *delim)
 {
 	static char *begin, *end_str, *end;
 	unsigned int i, j;

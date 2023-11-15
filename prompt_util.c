@@ -6,7 +6,7 @@
   */
 void print_ps1(int num)
 {
-	char ps1[] = "MARSU$ ";
+	char ps1[] = "$ ";
 	size_t len_ps1;
 	int org_error;
 

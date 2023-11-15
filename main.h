@@ -72,7 +72,7 @@ void my_exit(shell_t *);
 void print_env(shell_t *);
 
 /* function prototypes */
-char *_strtok(char *, const char *);
+char *tokenize_string(char *, const char *);
 ssize_t getline(char **, size_t *, FILE *);
 
 extern char **environ;

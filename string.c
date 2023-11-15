@@ -82,11 +82,11 @@ char **_split_string(char *str, char *delim)
 	str_dup = _str_duplicate(str);
 
 	/* count the delimiters */
-	tok = _strtok(str_dup, delim);
+	tok = tokenize_string(str_dup, delim);
 	while (tok)
 	{
 		n_delim++;
-		tok = _strtok(NULL, delim);
+		tok = tokenize_string(NULL, delim);
 	}
 
 	/*free the str_dup*/
@@ -98,12 +98,12 @@ char **_split_string(char *str, char *delim)
 		return (NULL);
 
 	/* tokenize str */
-	tok = _strtok(str, delim);
+	tok = tokenize_string(str, delim);
 	n_delim = 0;
 	while (tok)
 	{
 		tokens[n_delim] = tok;
-		tok = _strtok(NULL, delim);
+		tok = tokenize_string(NULL, delim);
 		n_delim++;
 	}
 	tokens[n_delim] = NULL;
