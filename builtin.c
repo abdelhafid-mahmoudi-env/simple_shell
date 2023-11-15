@@ -54,8 +54,9 @@ int cmd_cd(char **args)
  * @args: List of arguments (unused)
  * Return: Always returns 1, to continue executing
  */
-int cmd_help(char **args __attribute__((unused)))
+int cmd_help(char **args, char *builtin_str[])
 {
+	(void)args;
 	int i;
 
 	printf("Simple Shell by YourName\n");

@@ -71,8 +71,9 @@ int launch(char **args)
  * @args: Arguments array
  * Return: Status code
  */
-int execute(char **args)
+int execute(char **args, char *builtin_str[])
 {
+	(void)builtin_str;
 	int i;
 	int num_builtins = shell_num_builtins();
 

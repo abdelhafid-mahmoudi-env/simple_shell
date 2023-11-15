@@ -11,6 +11,13 @@
  */
 int main(int argc __attribute__((unused)), char **argv __attribute__((unused)))
 {
-	loop();
+	char *builtin_str[] = {
+		"cd",
+	       	"help",
+		"exit",
+		"env"
+	};
+
+	loop(builtin_str);
 	return (EXIT_SUCCESS);
 }

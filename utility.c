@@ -16,7 +16,7 @@ void sigint_handler(int sig __attribute__((unused)))
 /**
  * loop - Main loop of the shell
  */
-void loop(void)
+void loop(char *builtin_str[])
 {
 	char *line;
 	char **args;
