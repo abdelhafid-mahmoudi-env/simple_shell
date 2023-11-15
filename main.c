@@ -1,15 +1,22 @@
-
 #include "main.h"
 
-int main(int argc __attribute__((unused)), char **argv __attribute__((unused))) {
-    /* Load config files, if any. */
+/**
+ * main - Entry point for the simple shell.
+ * @argc: The argument count.
+ * @argv: An array of strings containing the command-line arguments.
+ *
+ * Return: EXIT_SUCCESS on success, otherwise EXIT_FAILURE.
+ */
+int main(int argc __attribute__((unused)), char **argv __attribute__((unused)))
+{
+	char *builtin_str[] = {
+		"cd",
+		"help",
+		"exit",
+		"env"
+	};
 
-    /* Run command loop. */
-    loop();
+	loop(builtin_str);
 
-    /* Perform any shutdown/cleanup. */
-
-    return EXIT_SUCCESS;
+	return (EXIT_SUCCESS);
 }
-
-
