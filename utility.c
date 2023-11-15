@@ -23,7 +23,7 @@ void loop(char **builtin_str)
 	signal(SIGINT, sigint_handler);
 
 	do {
-		printf("$ ");
+		prompt();
 		line = read_line();
 		args = split_line(line);
 		status = execute(args, builtin_str);

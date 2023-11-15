@@ -26,5 +26,8 @@ void loop(char **builtin_str);
 void sigint_handler(int sig);
 int shell_num_builtins(void);
 
+/** INPUTS **/
+void prompt(void);
+
 #endif /* MAIN_H */
 
