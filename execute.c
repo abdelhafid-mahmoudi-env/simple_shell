@@ -13,7 +13,7 @@ int shell_num_builtins(void)
 		"env"
 	};
 
-	return sizeof(builtin_str) / sizeof(char *);
+	return (sizeof(builtin_str) / sizeof(char *));
 }
 
 /**
@@ -21,8 +21,7 @@ int shell_num_builtins(void)
  * @index: Index of the built-in command
  * Return: Function pointer to the built-in command
  */
-int (*builtin_func(int index))(char **)
-{
+int (*builtin_func(int index))(char **) {
 	static int (*func[]) (char **) = {
 		&cmd_cd,
 		&cmd_help,
@@ -30,7 +29,7 @@ int (*builtin_func(int index))(char **)
 		&cmd_env
 	};
 
-	return func[index];
+	return (func[index]);
 }
 
 /**
@@ -52,21 +51,19 @@ int launch(char **args)
 			perror("lsh");
 		}
 		exit(EXIT_FAILURE);
-	}
-	else if (pid < 0)
+	} else if (pid < 0)
 	{
 		/* Error forking */
 		perror("lsh");
-	}
-	else
+	} else
 	{
 		/* Parent process */
-		do
-		{
+		do {
 			waitpid(pid, &status, WUNTRACED);
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
-	return 1;
+
+	return (1);
 }
 
 /**
@@ -77,23 +74,23 @@ int launch(char **args)
 int execute(char **args)
 {
 	int i;
+	int num_builtins = shell_num_builtins();
 
 	if (args[0] == NULL)
 	{
 		/* An empty command was entered */
-		return 1;
+		return (1);
 	}
 
-	int num_builtins = shell_num_builtins();
 	for (i = 0; i < num_builtins; i++)
 	{
 		if (strcmp(args[0], builtin_str[i]) == 0)
 		{
-			return (*builtin_func(i))(args);
+			return ((*builtin_func(i))(args));
 		}
 	}
 
-	return launch(args);
+	return (launch(args));
 }
 
 /**
@@ -104,5 +101,6 @@ int execute(char **args)
 int command_exists(char *cmd)
 {
 	struct stat buffer;
+
 	return (stat(cmd, &buffer) == 0 && (buffer.st_mode & S_IXUSR));
 }
