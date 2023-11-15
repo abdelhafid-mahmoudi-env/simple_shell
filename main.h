@@ -1,7 +1,7 @@
-#ifndef MAIN_H
-#define MAIN_H
+#ifndef SHELL_H
+#define SHELL_H
 
-#define DELIMITER "\t\r\n\a"
+#define DELIMITER " \t\r\n\a"
 
 #include <sys/types.h>
 #include <unistd.h>
@@ -15,40 +15,67 @@
 #include <errno.h>
 #include <signal.h>
 
-typedef struct shell_struct
+/**
+ * struct shell_env - stores address for pointer to free.
+ * @path_values: pointer to path values
+ * @input: pointer to buffer that getline creates.
+ * @input_token: pointers for input token.
+ * @modify_path: pointer to the path after it has been modified
+ *
+ * Description: provides a storage for all elements that are malloced.
+ */
+typedef struct shell_env
 {
-    char *path_values;
-    char *input;
-    char *input_token;
-    char *modify_path;
+	char **path_values;
+	char *input;
+	char **input_token;
+	char *modify_path;
 } shell_t;
 
-void free_shell_resources(shell_t *shell_ptrs);
-void print_command_error(char *command, char *filename);
+/**
+ * struct built_in_cmd - struct for different built in commands.
+ * @cmd_name: name of the cmd
+ * @cmd: function pointer to run the cmd
+ *
+ * Description: struct for different built in commands in our shell
+ */
+typedef struct built_in_cmd
+{
+	char *cmd_name;
+	void (*cmd)(shell_t *);
+} built_t;
 
-char *tokenize(char *str, const char *delim);
-char *init_token(char *str, char **save_ptr);
-int is_delim(char c, const char *delim);
-char *extract_token(char *str, const char *delim, char **save_ptr);
+/* main.c */
+int run_build_in(shell_t *, char *);
+int run_command(shell_t *, char *, char **);
+int run_path(shell_t *, char *);
+int check_slash(char *);
 
-size_t str_length(char *str);
-char *duplicate_string(char *s);
-int compare_strings(char *str1, char *str2);
+/* string.c */
+size_t _strlen(char *);
+char *_strdup(char *);
+char **tokenize_str(char *, char *);
+int _strcmp(char *, char *);
 
-void display_primary_prompt(int num);
-char **extract_path_tokens(char **modify_path);
-char *search_command_in_path(char **path, char *input);
-char *build_full_pathname(char *path, char *file);
-char *fetch_env_variable(const char *name);
+/* prompt_util.c */
+void print_ps1(int);
+char *find_pathname(char **, char *);
+char *_getenv(const char *);
+char *make_pathname(char *, char *);
+char **get_path(char **);
 
-int has_slash_in_command(char *str);
-int execute_user_command(shell_t *shell_ptrs, char *filename, char **envp);
-int process_builtin_command(shell_t *ptrs, char *filename);
-int execute_path_command(shell_t *shell_ptrs, char *filename);
+/* prompt_util2.c */
+void free_shell_t(shell_t *);
+void p_commanderr(char *, char *);
 
-void execute_exit(shell_t *ptrs);
-void display_environment(shell_t *ptrs);
+/* buildin.c */
+void my_exit(shell_t *);
+void print_env(shell_t *);
+
+/* function prototypes */
+char *_strtok(char *, const char *);
+ssize_t getline(char **, size_t *, FILE *);
 
 extern char **environ;
 
-#endif /* MAIN_H */
+#endif
