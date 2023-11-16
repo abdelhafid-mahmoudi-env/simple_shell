@@ -1,7 +1,6 @@
 #ifndef MAIN_H
 #define MAIN_H
 
-/* header files */
 #include <sys/types.h>
 #include <unistd.h>
 #include <sys/wait.h>
@@ -15,7 +14,7 @@
 #include <signal.h>
 
 /**
- * struct shell_env - stores address for pointer to free.
+ * struct sh - stores address for pointer to free.
  * @path_values: pointer to path values
  * @input: pointer to buffer that getline creates.
  * @input_token: pointers for input token.
@@ -23,7 +22,7 @@
  *
  * Description: provides a storage for all elements that are malloced.
  */
-typedef struct shell_env
+typedef struct sh
 {
 	char **path_values;
 	char *input;
