@@ -116,7 +116,7 @@ int run_build_in(shell_t *ptrs, char *filename)
 	char **input_words;
 	built_t cmd[] = {
 		{"exit", cancel},
-		{"env", env},
+		{"env", enviroment},
 		{NULL, NULL},
 	};
 
