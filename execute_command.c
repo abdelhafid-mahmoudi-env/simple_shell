@@ -44,10 +44,10 @@ int execute_command(shell_t *shell_ptrs, char *filename, char **envp)
         else
         {
             errno = 127;
-            p_commanderr(input_org, filename);
+            print_command_not_found_error(input_org, filename);
         }
         free(input_org);
-        free_shell_t(shell_ptrs);
+        free_shell_memory(shell_ptrs);
         _exit(errno);
     }
     else

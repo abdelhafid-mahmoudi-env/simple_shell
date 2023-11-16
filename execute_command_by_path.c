@@ -19,7 +19,7 @@ int execute_command_by_path(shell_t *shell_ptrs, char *filename)
     {
         if (execve(input_token[0], input_token, environ) == -1)
             perror(filename);
-        free_shell_t(shell_ptrs);
+        free_shell_memory(shell_ptrs);
         _exit(errno);
     }
     else

@@ -16,7 +16,7 @@ void cancel(shell_t *ptrs)
         for (i = 0; exit_str[i] != '\0'; i++)
             errno = errno * 10 + (exit_str[i] - '0');
     }
-    free_shell_t(ptrs);
+    free_shell_memory(ptrs);
     if (errno > 255)
         errno %= 256;
     exit(errno);

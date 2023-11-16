@@ -44,13 +44,11 @@ typedef struct built_in_cmd
 	void (*cmd)(shell_t *);
 } built_t;
 
-/* main.c */
 int execute_builtin_command(shell_t *, char *);
 int execute_command(shell_t *, char *, char **);
 int execute_command_by_path(shell_t *, char *);
 int contains_slash(char *);
 
-/* string.c */
 size_t string_length(char *);
 char *string_duplicate(char *);
 char **split_string(char *, char *);
@@ -63,15 +61,12 @@ char *_getenv(const char *);
 char *make_pathname(char *, char *);
 char **get_path(char **);
 
-/* prompt_util2.c */
-void free_shell_t(shell_t *);
-void p_commanderr(char *, char *);
+void free_shell_memory(shell_t *);
+void print_command_not_found_error(char *, char *);
 
-/* buildin.c */
 void cancel(shell_t *);
 void enviroment(shell_t *);
 
-/* function prototypes */
 char *tokenize_string(char *, const char *);
 ssize_t getline(char **, size_t *, FILE *);
 
