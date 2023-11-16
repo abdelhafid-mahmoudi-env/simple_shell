@@ -10,7 +10,7 @@
 int main(int argc, char *argv[], char *envp[])
 {
 	char **path_values, *modify_path, **input_token, *input;
-	char delimiter[] = " \n\r\t";
+	char delimiter[] = DELIMITER;
 	size_t n_input;
 	ssize_t getline_stat;
 	shell_t shell_ptrs;

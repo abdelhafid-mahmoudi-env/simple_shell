@@ -1,6 +1,8 @@
 #ifndef MAIN_H
 #define MAIN_H
 
+#define DELIMITER " \n\r\t"
+
 #include <sys/types.h>
 #include <unistd.h>
 #include <sys/wait.h>
