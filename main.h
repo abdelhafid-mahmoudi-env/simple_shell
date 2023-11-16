@@ -45,10 +45,10 @@ typedef struct built_in_cmd
 } built_t;
 
 /* main.c */
-int run_build_in(shell_t *, char *);
-int run_command(shell_t *, char *, char **);
-int run_path(shell_t *, char *);
-int check_slash(char *);
+int execute_builtin_command(shell_t *, char *);
+int execute_command(shell_t *, char *, char **);
+int execute_command_by_path(shell_t *, char *);
+int contains_slash(char *);
 
 /* string.c */
 size_t string_length(char *);
