@@ -115,8 +115,8 @@ int run_build_in(shell_t *ptrs, char *filename)
 	unsigned int num_words;
 	char **input_words;
 	built_t cmd[] = {
-		{"exit", my_exit},
-		{"env", print_env},
+		{"exit", cancel},
+		{"env", env},
 		{NULL, NULL},
 	};
 

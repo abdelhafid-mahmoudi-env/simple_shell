@@ -68,8 +68,8 @@ void free_shell_t(shell_t *);
 void p_commanderr(char *, char *);
 
 /* buildin.c */
-void my_exit(shell_t *);
-void print_env(shell_t *);
+void cancel(shell_t *);
+void enviroment(shell_t *);
 
 /* function prototypes */
 char *tokenize_string(char *, const char *);
