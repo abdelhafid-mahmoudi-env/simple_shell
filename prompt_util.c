@@ -11,7 +11,7 @@ void print_ps1(int num)
 	int org_error;
 
 	org_error = errno;
-	len_ps1 = _str_length(ps1);
+	len_ps1 = string_length(ps1);
 	if (isatty(0))
 		write(STDOUT_FILENO, ps1, len_ps1);
 	if (num == 0)
@@ -34,7 +34,7 @@ char **get_path(char **modify_path)
 
 	delim = ":";
 	path = _getenv("PATH");
-	num_char = _str_length(path);
+	num_char = string_length(path);
 	*modify_path = malloc(sizeof(char) * (num_char + 2));
 	if (num_char == 0)
 	{
@@ -66,7 +66,7 @@ char **get_path(char **modify_path)
 		for (; j < num_char + 2; j++)
 			(*modify_path)[j] = '\0';
 	}
-	token_ptr = _split_string(*modify_path, delim);
+	token_ptr = split_string(*modify_path, delim);
 	return (token_ptr);
 }
 
@@ -97,7 +97,7 @@ char *find_pathname(char **path, char *input)
 		while ((filename = readdir(directory)) != NULL)
 		{
 			/* TODO make strcmp function */
-			str_cmp = _str_compare(filename->d_name, input);
+			str_cmp = string_compare(filename->d_name, input);
 			if (str_cmp == 0)
 			{
 				match_found = 1;
@@ -133,8 +133,8 @@ char *make_pathname(char *path, char *file)
 	char *result;
 	unsigned int j, k;
 
-	num_path = _str_length(path);
-	num_file = _str_length(file);
+	num_path = string_length(path);
+	num_file = string_length(file);
 	result = malloc(sizeof(char) * (num_path + num_file + 2));
 	if (result == NULL)
 		return (NULL);
