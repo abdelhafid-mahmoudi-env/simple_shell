@@ -32,17 +32,17 @@ typedef struct shell_env
 } shell_t;
 
 /**
- * struct built_in_cmd - struct for different built in commands.
+ * struct bicmd - struct for different built in commands.
  * @cmd_name: name of the cmd
  * @cmd: function pointer to run the cmd
  *
  * Description: struct for different built in commands in our shell
  */
-typedef struct built_in_cmd
+typedef struct bicmd
 {
 	char *cmd_name;
 	void (*cmd)(shell_t *);
-} built_t;
+} builtin;
 
 char *tokenize_string(char *, const char *);
 ssize_t getline(char **, size_t *, FILE *);

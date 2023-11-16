@@ -12,7 +12,7 @@ int execute_builtin_command(shell_t *ptrs, char *filename)
 	char **input_words;
 	unsigned int num_words;
 
-	built_t cmd[] = {
+	builtin cmd[] = {
 		{"exit", cancel},
 		{"env", enviroment},
 		{NULL, NULL}
