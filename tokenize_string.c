@@ -1,10 +1,12 @@
 #include "main.h"
 
 /**
- * tokenize_string - tokenizes a string
- * @str: string to tokenize
- * @delim: string that contains the delimiters
- * Return: pointer to the next token in the string, or NULL if no more tokens are found.
+ * tokenize_string - Tokenizes a string.
+ * @str: String to tokenize.
+ * @delim: String that contains the delimiters.
+ *
+ * Return: Pointer to the next token in the string,
+ * or NULL if no more tokens are found.
  */
 char *tokenize_string(char *str, const char *delim)
 {
@@ -46,4 +48,3 @@ char *tokenize_string(char *str, const char *delim)
 		return (begin);
 	return (NULL);
 }
-

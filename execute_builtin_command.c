@@ -8,34 +8,33 @@
  */
 int execute_builtin_command(shell_t *ptrs, char *filename)
 {
-    size_t index;
-    char **input_words;
-    unsigned int num_words;
+	size_t index;
+	char **input_words;
+	unsigned int num_words;
 
-    built_t cmd[] = {
-        {"exit", cancel},
-        {"env", enviroment},
-        {NULL, NULL}
-    };
+	built_t cmd[] = {
+		{"exit", cancel},
+		{"env", enviroment},
+		{NULL, NULL}
+	};
 
-    (void)filename;
-    if (!ptrs || !ptrs->input_token[0])
-        return (1);
-    input_words = ptrs->input_token;
-    num_words = 0;
-    while (input_words[num_words] != NULL)
-        num_words++;
-    index = 0;
-    while (cmd[index].cmd_name)
-    {
-        if (string_compare(ptrs->input_token[0], cmd[index].cmd_name) == 0)
-        {
-            (cmd[index].cmd)(ptrs);
-            return (0);
-        }
-        index++;
-    }
+	(void)filename;
+	if (!ptrs || !ptrs->input_token[0])
+		return (1);
+	input_words = ptrs->input_token;
+	num_words = 0;
+	while (input_words[num_words] != NULL)
+		num_words++;
+	index = 0;
+	while (cmd[index].cmd_name)
+	{
+		if (string_compare(ptrs->input_token[0], cmd[index].cmd_name) == 0)
+		{
+			(cmd[index].cmd)(ptrs);
+			return (0);
+		}
+		index++;
+	}
 
-    return (1);
+	return (1);
 }
-

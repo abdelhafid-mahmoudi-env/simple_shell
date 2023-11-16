@@ -68,6 +68,7 @@ int execute_builtin_command(shell_t *, char *);
 int execute_command(shell_t *, char *, char **);
 int execute_command_by_path(shell_t *, char *);
 int contains_slash(char *);
+void child_process(shell_t *shell_ptrs, char *filename, char **envp);
 
 extern char **environ;
 

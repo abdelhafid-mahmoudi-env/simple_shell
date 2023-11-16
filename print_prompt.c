@@ -6,18 +6,18 @@
  */
 void print_prompt(int num)
 {
-    char prompt[] = "$ ";
-    size_t prompt_len;
-    int original_error;
+	char prompt[] = "$ ";
+	size_t prompt_len;
+	int original_error;
 
-    original_error = errno;
-    prompt_len = string_length(prompt);
+	original_error = errno;
+	prompt_len = string_length(prompt);
 
-    if (isatty(0))
-        write(STDOUT_FILENO, prompt, prompt_len);
+	if (isatty(0))
+		write(STDOUT_FILENO, prompt, prompt_len);
 
-    if (num == 0)
-        errno = 0;
-    else
-        errno = original_error;
+	if (num == 0)
+		errno = 0;
+	else
+		errno = original_error;
 }

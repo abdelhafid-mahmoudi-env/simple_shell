@@ -6,11 +6,11 @@
  */
 void free_shell_memory(shell_t *shell_ptrs)
 {
-    if (shell_ptrs)
-    {
-        free(shell_ptrs->path_values);
-        free(shell_ptrs->input);
-        free(shell_ptrs->input_token);
-        free(shell_ptrs->modify_path);
-    }
+	if (shell_ptrs)
+	{
+		free(shell_ptrs->path_values);
+		free(shell_ptrs->input);
+		free(shell_ptrs->input_token);
+		free(shell_ptrs->modify_path);
+	}
 }
