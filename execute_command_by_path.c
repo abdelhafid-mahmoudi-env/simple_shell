@@ -8,22 +8,22 @@
  */
 int execute_command_by_path(shell_t *shell_ptrs, char *filename)
 {
-    pid_t child_pid;
-    int status;
-    char **input_token = shell_ptrs->input_token;
+	pid_t child_pid;
+	int status;
+	char **input_token = shell_ptrs->input_token;
 
-    (void)filename;
+	(void)filename;
 
-    child_pid = fork();
-    if (child_pid == 0)
-    {
-        if (execve(input_token[0], input_token, environ) == -1)
-            perror(filename);
-        free_shell_memory(shell_ptrs);
-        _exit(errno);
-    }
-    else
-        wait(&status);
-    errno = status % 255;
-    return (errno);
+	child_pid = fork();
+	if (child_pid == 0)
+	{
+		if (execve(input_token[0], input_token, environ) == -1)
+			perror(filename);
+		free_shell_memory(shell_ptrs);
+		_exit(errno);
+	}
+	else
+		wait(&status);
+	errno = status % 255;
+	return (errno);
 }
