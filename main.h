@@ -44,31 +44,30 @@ typedef struct built_in_cmd
 	void (*cmd)(shell_t *);
 } built_t;
 
-int execute_builtin_command(shell_t *, char *);
-int execute_command(shell_t *, char *, char **);
-int execute_command_by_path(shell_t *, char *);
-int contains_slash(char *);
+char *tokenize_string(char *, const char *);
+ssize_t getline(char **, size_t *, FILE *);
+
+void cancel(shell_t *);
+void enviroment(shell_t *);
+
+void free_shell_memory(shell_t *);
+void print_command_not_found_error(char *, char *);
+
+void print_prompt(int);
+char *find_executable_path(char **, char *);
+char *getenv(const char *);
+char *create_pathname(char *, char *);
+char **get_path_tokens(char **);
 
 size_t string_length(char *);
 char *string_duplicate(char *);
 char **split_string(char *, char *);
 int string_compare(char *, char *);
 
-/* prompt_util.c */
-void print_ps1(int);
-char *find_pathname(char **, char *);
-char *_getenv(const char *);
-char *make_pathname(char *, char *);
-char **get_path(char **);
-
-void free_shell_memory(shell_t *);
-void print_command_not_found_error(char *, char *);
-
-void cancel(shell_t *);
-void enviroment(shell_t *);
-
-char *tokenize_string(char *, const char *);
-ssize_t getline(char **, size_t *, FILE *);
+int execute_builtin_command(shell_t *, char *);
+int execute_command(shell_t *, char *, char **);
+int execute_command_by_path(shell_t *, char *);
+int contains_slash(char *);
 
 extern char **environ;
 

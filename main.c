@@ -17,8 +17,8 @@ int main(int argc, char *argv[], char *envp[])
 
 	(void)argc;
 	input = NULL;
-	path_values = get_path(&modify_path);
-	print_ps1(0);
+	path_values = get_path_tokens(&modify_path);
+	print_prompt(0);
 	shell_ptrs.modify_path = modify_path;
 	shell_ptrs.path_values = path_values;
 	signal(SIGINT, SIG_IGN);
@@ -35,7 +35,7 @@ int main(int argc, char *argv[], char *envp[])
 				execute_command(&shell_ptrs, argv[0], envp);
 		}
 		free(input_token);
-		print_ps1(1);
+		print_prompt(1);
 	}
 	free(modify_path);
 	free(path_values);

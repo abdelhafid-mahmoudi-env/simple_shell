@@ -34,7 +34,7 @@ int execute_command(shell_t *shell_ptrs, char *filename, char **envp)
             perror("string_duplicate");
             exit(1);
         }
-        executable = find_pathname(path, command);
+        executable = find_executable_path(path, command);
         if (executable != NULL)
         {
             if (execve(executable, input_token, envp) == -1)
