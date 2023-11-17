@@ -14,20 +14,11 @@ int execute_command_by_path(shell_t *shell_ptrs, char *filename)
 
 	(void)filename;
 
-	if (strcmp(getenv("PATH"), "") == 0)
-	{
-		if (access(input_token[0], X_OK) != 0)
-		{
-			fprintf(stderr, "%s: command not found\n", input_token[0]);
-			return 127;
-		}
-	}
-
 	child_pid = fork();
 	if (child_pid == 0)
 	{
 		if (execve(input_token[0], input_token, environ) == -1)
-			perror(input_token[0]);
+			perror(filename);
 		free_shell_memory(shell_ptrs);
 		_exit(errno);
 	}
